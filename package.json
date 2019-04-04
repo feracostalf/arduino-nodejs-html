@@ -1,0 +1,21 @@
+{
+  "name": "arduino-html",
+  "version": "1.0.0",
+  "description": "serial arduino html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@serialport/parser-readline": "^2.0.2",
+    "canvas-gauges": "^2.1.5-linear",
+    "express": "^4.16.4",
+    "serial": "0.0.9",
+    "serialport": "^7.1.4",
+    "socket.io": "^2.2.0",
+    "vue": "^2.6.10",
+    "vue-canvas-gauges": "0.0.0"
+  }
+}
