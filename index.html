@@ -15,17 +15,27 @@
 		
 		 var socket = io.connect();
 		socket.on('news', function (data) {
-				
     document.getElementById("serial").setAttribute("data-value", data.serial);
-document.getElementById("serial2").setAttribute("data-value", data.serial);
+    document.getElementById("serial2").setAttribute("data-value", data.serial);
 		});
-            });
+    });
+      function runtest(varx){
+        var_1=varx;
+        if(var_1==101)
+          var_1=0;
+        document.getElementById("serial").setAttribute("data-value", var_1);
+        document.getElementById("serial2").setAttribute("data-value", var_1);
+        
+        setTimeout('runtest(var_1+1)',1000);
+        
+    }
+    
 </script>
 
 
 </head>
 
-<body>
+<body onload="runtest(0)">
 <div class="container-fluid">
   <div class="row">
     <div class="col" align="center">
@@ -40,7 +50,11 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
         data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
         data-value="0.0"
         data-units="°C"
-        data-color-value-box-shadow="false">
+        data-color-plate="#00e8ff"
+        data-highlights='[ {"from": 0, "to": 50, "color": "rgba(0,0, 255, .3)"},
+        {"from": 50, "to": 100, "color": "rgba(255, 0, 15, .3)"} ]'
+        data-color-value-box-shadow="true">
+        
 	</canvas>
     </div>
     <div class="col">
@@ -98,7 +112,7 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
     data-color-title="#eee"
     data-color-units="#ccc"
     data-color-numbers="#eee"
-    data-color-plate="#222"
+    data-color-plate="#01707b"
     data-border-shadow-width="0"
     data-borders="true"
     data-needle-type="arrow"

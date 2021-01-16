@@ -1,21 +1,25 @@
 {
-  "name": "arduino-html",
+  "name": "arduino-nodejs-html",
   "version": "1.0.0",
-  "description": "serial arduino html",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feracostalf/arduino-nodejs-html.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/feracostalf/arduino-nodejs-html/issues"
+  },
+  "homepage": "https://github.com/feracostalf/arduino-nodejs-html#readme",
   "dependencies": {
-    "@serialport/parser-readline": "^2.0.2",
-    "canvas-gauges": "^2.1.5-linear",
-    "express": "^4.16.4",
-    "serial": "0.0.9",
-    "serialport": "^7.1.4",
-    "socket.io": "^2.2.0",
-    "vue": "^2.6.10",
-    "vue-canvas-gauges": "0.0.0"
+    "express": "^4.17.1",
+    "serialport": "^9.0.3",
+    "socket.io": "^3.0.4"
   }
 }
