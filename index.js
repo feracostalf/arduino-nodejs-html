@@ -6,6 +6,7 @@ var  io = require("socket.io")(server);
 const Readline=require("@serialport/parser-readline");
 
 
+
 const serial = new serialPort('/dev/ttyACM0', {
   baudRate: 9600});
 
