@@ -2,11 +2,12 @@
 <html>
 <head>
 <title>Seerial Arduno</title>
+<link rel="stylesheet" type="text/css" href="node_modules/chartjs/dist/Chart.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<script src="node_modules/chart.js/dist/Chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="http://cdn.socket.io/socket.io-1.4.0.js"></script>
 <script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.5/all/gauge.min.js"></script>
@@ -15,22 +16,50 @@
 		
 		 var socket = io.connect();
 		socket.on('news', function (data) {
-				
     document.getElementById("serial").setAttribute("data-value", data.serial);
-document.getElementById("serial2").setAttribute("data-value", data.serial);
+    document.getElementById("serial2").setAttribute("data-value", data.serial);
+    document.getElementById("serial3").setAttribute("data-value", data.serial);
+
 		});
-            });
+    });
+      function runtest(var_temp,var_hum,var_alt,side){
+                 
+        var_t=var_temp;
+        var_h=var_hum;
+        var_a=var_alt;
+        document.getElementById("serial").setAttribute("data-value", var_t);
+        document.getElementById("serial2").setAttribute("data-value", var_h);
+        document.getElementById("serial3").setAttribute("data-value", var_a);
+        
+        if (var_t<20)
+          side=1;
+        if (var_t>22 )
+          side=0;
+        
+
+        if(side==1 ){
+          setTimeout('runtest(var_t+0.1,var_h+0.3,var_a-5.4,1)',1000);
+        }
+        else
+          setTimeout('runtest(var_t-0.1,var_h-0.3,var_a+5.4,0)',1000);
+        
+    }
+
+     
 </script>
 
 
 </head>
 
-<body>
+<body onload="runtest(22,37,20,0)">
 <div class="container-fluid">
   <div class="row">
     <div class="col" align="center">
+      
       <canvas id="serial"
-	data-type="linear-gauge"
+  data-type="linear-gauge"
+  data-units="°C"
+    data-title="Sensor de Temperatura"
         data-width="160"
         data-height="600"
         data-border-radius="20"
@@ -40,7 +69,11 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
         data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
         data-value="0.0"
         data-units="°C"
-        data-color-value-box-shadow="false">
+        data-color-plate="#00e8ff"
+        data-highlights='[ {"from": 0, "to": 50, "color": "rgba(0,0, 255, .3)"},
+        {"from": 50, "to": 100, "color": "rgba(255, 0, 15, .3)"} ]'
+        data-color-value-box-shadow="true">
+        
 	</canvas>
     </div>
     <div class="col">
@@ -77,15 +110,16 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
 
 	</div>
     </div>
+
     <div class="col" align="center">
-<canvas id="serial2"
+    <canvas id="serial2"
     data-type="radial-gauge"
     data-width="300"
     data-height="300"
-    data-units="°C"
-    data-title="Temperatura Sensor"
-    data-min-value="0"
-    data-max-value="100"
+    data-units="%"
+    data-title="Sensor de Humedad"
+    data-min-value="0%"
+    data-max-value="100%"
     data-major-ticks="[0,10,20,30,40,50,60,70,80,90,100]"
     data-minor-ticks="2"
     data-stroke-ticks="true"
@@ -98,7 +132,7 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
     data-color-title="#eee"
     data-color-units="#ccc"
     data-color-numbers="#eee"
-    data-color-plate="#222"
+    data-color-plate="#01707b"
     data-border-shadow-width="0"
     data-borders="true"
     data-needle-type="arrow"
@@ -124,6 +158,57 @@ document.getElementById("serial2").setAttribute("data-value", data.serial);
     data-color-value-box-rect-end="#333"
 ></canvas>
     </div>
+
+    <div class="row" align="center">
+      <canvas id="serial3"
+      data-type="radial-gauge"
+      data-width="300"
+      data-height="300"
+      data-units="cm"
+      data-title="Altura"
+      data-min-value="0"
+      data-max-value="150"
+      data-major-ticks="[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150]"
+      data-minor-ticks="2"
+      data-stroke-ticks="true"
+      data-highlights='[ {"from": 0, "to": 50, "color": "rgba(0,0, 255, .3)"},
+          {"from": 50, "to": 100, "color": "rgba(255, 0, 0, .3)"} ]'
+      data-ticks-angle="225"
+      data-start-angle="67.5"
+      data-color-major-ticks="#ddd"
+      data-color-minor-ticks="#ddd"
+      data-color-title="#eee"
+      data-color-units="#ccc"
+      data-color-numbers="#eee"
+      data-color-plate="#01707b"
+      data-border-shadow-width="0"
+      data-borders="true"
+      data-needle-type="arrow"
+      data-needle-width="2"
+      data-needle-circle-size="7"
+      data-needle-circle-outer="true"
+      data-needle-circle-inner="false"
+      data-animation-duration="400"
+      data-animation-rule="linear"
+      data-color-border-outer="#333"
+      data-color-border-outer-end="#111"
+      data-color-border-middle="#222"
+      data-color-border-middle-end="#111"
+      data-color-border-inner="#111"
+      data-color-border-inner-end="#333"
+      data-color-needle-shadow-down="#333"
+      data-color-needle-circle-outer="#333"
+      data-color-needle-circle-outer-end="#111"
+      data-color-needle-circle-inner="#111"
+      data-color-needle-circle-inner-end="#222"
+      data-value-box-border-radius="0"
+      data-color-value-box-rect="#222"
+      data-color-value-box-rect-end="#333"
+  ></canvas>
+      </div>
+
+
+
   </div>
 </div>
 </body>
